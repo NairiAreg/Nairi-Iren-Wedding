@@ -128,12 +128,37 @@ let showOnScroll = (block) => {
   }
 }
 
+// Improved mobile detection
+const isMobile = () => window.innerWidth <= 767;
+
+// Improved resize function with better mobile responsiveness
 let resize = e => {
   let width = 0;
   slides.forEach(slide => width = width + slide.clientWidth);
-  slides.forEach(slide => console.log(slide.clientWidth));
-  document.body.style.width = width+1200+'px';
-  console.log(width);
+  
+  // Adjust body width based on device size
+  let additionalWidth = isMobile() ? 800 : 1200;
+  document.body.style.width = width + additionalWidth + 'px';
+  
+  // Adjust the card container layout if on mobile
+  if (isMobile()) {
+    // Mobile-specific adjustments
+    const cardContainer = document.querySelector('.container');
+    if (cardContainer) {
+      // Adjust container styling for better mobile layout
+      cardContainer.style.flexWrap = 'wrap';
+      cardContainer.style.justifyContent = 'center';
+    }
+    
+    // Adjust the game card container for better image display
+    const gameCardContainer = document.querySelector('.l-container');
+    if (gameCardContainer) {
+      gameCardContainer.style.gridGap = '10px';
+    }
+  }
+  
+  // Recalculate trigger point
+  setTriggerPoint();
 }
 
 /* setup */
@@ -193,26 +218,31 @@ let handleTouchEnd = (e) => {
   yDown = null
 }
 
+// Modified touch handling for better mobile experience
 let handleTouchMove = (e) => {
   e.preventDefault()
-  if ( ! xDown || ! yDown ) return
+  if (!xDown || !yDown) return
   let xUp = e.touches[0].clientX
   let yUp = e.touches[0].clientY
   var xDiff = xDown - xUp
   var yDiff = yDown - yUp
-  if ( Math.abs( xDiff ) > Math.abs( yDiff ) ) {
-    if ( xDiff > 0 ) direction = 'left'
+  
+  // Enhanced sensitivity for mobile
+  let scrollFactor = isMobile() ? 1.5 : 3
+  
+  if (Math.abs(xDiff) > Math.abs(yDiff)) {
+    if (xDiff > 0) direction = 'left'
     else direction = 'right'
-    window.scroll(scrollXOnDown + (xDiff*3), 0)
+    window.scroll(scrollXOnDown + (xDiff * scrollFactor), 0)
   } else {
-    if ( yDiff > 0 ) direction = 'up';
+    if (yDiff > 0) direction = 'up';
     else direction = 'down';
-    window.scroll(scrollXOnDown + (yDiff*3), 0)
+    window.scroll(scrollXOnDown + (yDiff * scrollFactor), 0)
   }
 }
 
 wrapper.addEventListener('touchstart', handleTouchStart, false)
-wrapper.addEventListener('touchmove', handleTouchMove, false)
+wrapper.addEventListener('touchmove', handleTouchMove, { passive: false }) // Changed to non-passive for better control
 wrapper.addEventListener('touchend', handleTouchEnd, false)  
 
 
@@ -239,3 +269,23 @@ document.getElementById('fixed_zibil').style.width = window.innerWidth+'px';
 }
 
 // document.querySelector("body *").style.display = 'none';
+
+// Mobile detection - update to be responsive rather than showing a message
+document.addEventListener('scroll',() => {
+  // Remove the desktop-only message
+  document.getElementById('fixed_zibil').style.display = 'none';
+})
+
+// Remove the desktop-only message entirely
+if (document.getElementById('fixed_zibil')) {
+  document.getElementById('fixed_zibil').style.display = 'none';
+}
+
+// Resize handler for better mobile support
+window.addEventListener('resize', () => {
+  // Recalculate trigger point for better mobile drawing
+  triggerPoint = window.innerWidth - (window.innerWidth / 3);
+});
+
+// Initial trigger point calculation
+setTriggerPoint();

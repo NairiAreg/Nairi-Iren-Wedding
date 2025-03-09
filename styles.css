@@ -19,10 +19,116 @@ html {
 
 body {
   overflow: hidden;
-  width: 10000px;
   height: 100%;
   font-family: system-ui,sans-serif;
   color: #8844ff;
+  width: 10000px;
+}
+
+@media (max-width: 767px) {
+  body {
+    width: 5000px;
+  }
+  
+  .slide {
+    width: 100vw;
+    position: relative;
+  }
+  
+  .content {
+    padding: 30px 15px;
+    flex-direction: column;
+    position: relative;
+    z-index: 5;
+    width: 100%;
+  }
+  
+  .block {
+    width: 85%;
+    margin: 15px auto;
+    font-size: 0.9em;
+    position: relative;
+    text-shadow: 0 0 4px #fff, 0 0 4px #fff, 0 0 4px #fff;
+    background-color: rgba(255, 255, 255, 0.7);
+    border-radius: 8px;
+    padding: 10px;
+  }
+  
+  .slogan {
+    top: 80px;
+    width: 100%;
+    position: relative;
+  }
+  
+  .headline {
+    font-size: 1.4em;
+    text-align: center;
+    text-shadow: 0 0 4px #fff, 0 0 4px #fff, 0 0 4px #fff;
+  }
+  
+  .container .card1 {
+    margin: 15px;
+    flex: 1 1 100%;
+    max-width: 280px;
+  }
+  
+  .slide svg {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
+  
+  .scroll-note {
+    bottom: 5vh;
+    font-size: 1em;
+  }
+  
+  /* Card styling for skills section (Photoshop, Illustrator, etc.) */
+  .card {
+    margin-bottom: 30px;
+    width: 130px;
+    height: 130px;
+  }
+  
+  /* Fix container for skill cards */
+  .container {
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+  }
+  
+  /* Image card gallery fixes */
+  .b-game-card {
+    margin: 10px 0;
+    height: 150px;
+  }
+  
+  .b-game-card__cover {
+    height: 150px;
+  }
+  
+  /* Improve text block readability with subtle background */
+  .block {
+    background-color: rgba(255, 255, 255, 0.7); /* Subtle white background */
+    border-radius: 8px;
+    padding: 10px;
+  }
+  
+  /* Make blockquotes more readable */
+  blockquote {
+    background-color: rgba(255, 255, 255, 0.7);
+    border-radius: 8px;
+    padding: 10px;
+  }
+}
+
+@media (min-width: 768px) {
+  body {
+    width: 10000px; /* Original width for desktop */
+  }
 }
 
 .wrapper {
@@ -62,6 +168,12 @@ body {
   -webkit-box-pack: center;
       -ms-flex-pack: center;
           justify-content: center;
+}
+
+@media (min-width: 768px) {
+  .slide {
+    width: 200vw; /* Original width for desktop */
+  }
 }
 
 .slide svg {
@@ -245,6 +357,9 @@ blockquote {
   margin: 0;
   font-size: 1.1em;
   font-family: Garamond, serif;
+  background-color: rgba(255, 255, 255, 0.7);
+  border-radius: 8px;
+  padding: 10px;
 }
 
 blockquote footer {
@@ -890,22 +1005,51 @@ i {
 }
 
 #fixed_zibil {
+  display: none;
   position: fixed;
+  z-index: 999;
   top: 0;
   left: 0;
-  z-index: 999999;
-  width: 100vw;
+  width: 100%;
   height: 100%;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
+  background-color: #8844ff;
   color: white;
-  background: #8844FF;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  font-size: 24px;
+  padding: 20px;
+}
+
+/* Adding styles for slide SVGs */
+.slide-svg {
+  overflow: visible;
+}
+
+@media (max-width: 767px) {
+  .slide-svg {
+    z-index: 1;
+  }
+}
+
+.skills-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+@media (max-width: 767px) {
+  .skills-container {
+    gap: 10px;
+    padding: 10px;
+  }
+  
+  .skills-container .card {
+    margin: 10px;
+  }
 }
 /*# sourceMappingURL=styles.css.map */
