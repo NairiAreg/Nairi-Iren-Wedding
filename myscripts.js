@@ -25,9 +25,14 @@ class Item {
     this.path.style.strokeDasharray = this.pathLength + " " + this.pathLength;
   }
 
-  growPathOnScroll() {
-    let rect = this.path.getBoundingClientRect();
-    let percent = (triggerPoint - rect.left) / rect.width;
+  growPathOnScroll(path, index) {
+    let rect = path.getBoundingClientRect();
+    let offset = 0;
+    if (index === 1) {
+      offset = 10;
+    }
+    
+    let percent = (triggerPoint - rect.left + offset) / rect.width;
     if (percent < 0) percent = 0;
     if (percent > 1) percent = 1;
     this.offsetPath();
@@ -123,9 +128,14 @@ let offsetPath = (path, percent) => {
   path.style.strokeDasharray = pathLength * percent + " " + pathLength;
 };
 
-let growPathOnScroll = (path) => {
+let growPathOnScroll = (path, index) => {
   let rect = path.getBoundingClientRect();
-  let percent = (triggerPoint - rect.left) / rect.width;
+  let offset = 0;
+  if (index === 1) {
+    offset = -10;
+  }
+  
+  let percent = (triggerPoint - rect.left + offset) / rect.width;
   if (percent < 0) percent = 0;
   if (percent > 1) percent = 1;
   offsetPath(path, percent);
@@ -204,7 +214,7 @@ let draw = () => {
   let x = scroller.getBoundingClientRect().left;
   if (x != lastX) {
     if (-x <= window.innerWidth - window.innerWidth / 3) triggerPoint = -x;
-    paths.forEach((path) => growPathOnScroll(path));
+    paths.forEach((path, index) => growPathOnScroll(path, index));
     blocks.forEach((block) => showOnScroll(block));
   }
   lastX = x;
