@@ -31,7 +31,7 @@ class Item {
     if (index === 1) {
       offset = 10;
     }
-    
+
     let percent = (triggerPoint - rect.left + offset) / rect.width;
     if (percent < 0) percent = 0;
     if (percent > 1) percent = 1;
@@ -134,7 +134,7 @@ let growPathOnScroll = (path, index) => {
   if (index === 1) {
     offset = -10;
   }
-  
+
   let percent = (triggerPoint - rect.left + offset) / rect.width;
   if (percent < 0) percent = 0;
   if (percent > 1) percent = 1;
@@ -312,3 +312,34 @@ window.addEventListener("resize", () => {
 
 // Initial trigger point calculation
 setTriggerPoint();
+
+// Countdown Timer
+function updateCountdown() {
+  const weddingDate = new Date("June 28, 2025 00:00:00").getTime();
+  const now = new Date().getTime();
+  const distance = weddingDate - now;
+
+  // Time calculations
+  const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+  const hours = Math.floor(
+    (distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
+  );
+  const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+  const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+  // Display the result
+  document.getElementById("days").innerText = String(days).padStart(2, "0");
+  document.getElementById("hours").innerText = String(hours).padStart(2, "0");
+  document.getElementById("minutes").innerText = String(minutes).padStart(
+    2,
+    "0"
+  );
+  document.getElementById("seconds").innerText = String(seconds).padStart(
+    2,
+    "0"
+  );
+}
+
+// Update countdown every second
+setInterval(updateCountdown, 1000);
+updateCountdown();

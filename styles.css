@@ -160,7 +160,7 @@ body {
 
 .slide {
   position: relative;
-  width: 200vw;
+  width: 240vw;
   height: 100%;
   display: -webkit-box;
   display: -ms-flexbox;
@@ -171,12 +171,6 @@ body {
   -webkit-box-pack: center;
   -ms-flex-pack: center;
   justify-content: center;
-}
-
-@media (min-width: 768px) {
-  .slide {
-    width: 200vw; /* Original width for desktop */
-  }
 }
 
 .slide svg {
@@ -194,6 +188,15 @@ body {
   fill: none;
   stroke: #8844ff;
   stroke-width: 4;
+}
+.slide.pink-blue path {
+  stroke: #8844ff;
+}
+.slide.blue path {
+  stroke: #1a2fcd;
+}
+.slide.pink path {
+  stroke: #cd1aa0;
 }
 
 .js .slide path {
