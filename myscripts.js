@@ -343,3 +343,91 @@ function updateCountdown() {
 // Update countdown every second
 setInterval(updateCountdown, 1000);
 updateCountdown();
+
+// RSVP Form Submission to Google Sheets
+document.addEventListener("DOMContentLoaded", function () {
+  const rsvpForm = document.getElementById("rsvp-form");
+  const formStatus = document.getElementById("form-status");
+  const attendingBtn = document.getElementById("attending-yes");
+  const notAttendingBtn = document.getElementById("attending-no");
+
+  // Google Apps Script URL
+  const scriptURL =
+    "https://script.google.com/macros/s/AKfycbyTjezA5tccPxq4Q4BnYeXrZq04n-wi-UrTt7P6k5Ww3qbVcQs917fGOzSRSQgGdx2v/exec";
+
+  function submitForm(attendance) {
+    // Validate form
+    const name = document.getElementById("name").value;
+    const phone = document.getElementById("phone").value;
+
+    if (!name || !phone) {
+      formStatus.textContent = "Խնդրում ենք լրացնել բոլոր դաշտերը։";
+      formStatus.className = "error";
+      return;
+    }
+
+    // Show loading state
+    formStatus.textContent = "Ուղարկվում է...";
+    formStatus.className = "";
+
+    // Prepare data for sending with only the required fields
+    const data = {
+      timestamp: new Date().toISOString(),
+      name: name,
+      phone: phone,
+      attendance: attendance,
+    };
+
+    // Create an iframe for the response
+    const iframeName = "hidden-iframe";
+    let iframe = document.getElementById(iframeName);
+    if (!iframe) {
+      iframe = document.createElement("iframe");
+      iframe.id = iframeName;
+      iframe.name = iframeName;
+      iframe.style.display = "none";
+      document.body.appendChild(iframe);
+    }
+
+    // Create form with proper encoding for JSON
+    const form = document.createElement("form");
+    form.method = "POST";
+    form.action = scriptURL;
+    form.target = iframeName;
+
+    // Add a field for the JSON data
+    const jsonField = document.createElement("input");
+    jsonField.type = "hidden";
+    jsonField.name = "payload";
+    jsonField.value = JSON.stringify(data);
+    form.appendChild(jsonField);
+
+    // Submit the form
+    document.body.appendChild(form);
+    form.submit();
+
+    // Remove the form after submission
+    setTimeout(() => {
+      document.body.removeChild(form);
+      formStatus.textContent = "Շնորհակալություն! Ձեր RSVP-ն ընդունված է։";
+      formStatus.className = "success";
+      rsvpForm.reset();
+    }, 2000);
+
+    // Add event listener to handle errors
+    iframe.onerror = function () {
+      formStatus.textContent = "Տեղի ունեցավ սխալ: Խնդրում ենք փորձել կրկին։";
+      formStatus.className = "error";
+    };
+  }
+
+  if (attendingBtn && notAttendingBtn) {
+    attendingBtn.addEventListener("click", function (e) {
+      submitForm("Այո");
+    });
+
+    notAttendingBtn.addEventListener("click", function (e) {
+      submitForm("Ոչ");
+    });
+  }
+});

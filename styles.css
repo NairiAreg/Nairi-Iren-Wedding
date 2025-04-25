@@ -1078,4 +1078,151 @@ i {
     margin: 10px;
   }
 }
+
+/* RSVP Form Styles */
+.rsvp-form-container {
+  max-width: 600px;
+  margin: 20px auto;
+  padding: 20px;
+  background-color: rgba(255, 255, 255, 0.8);
+  border-radius: 10px;
+  box-shadow: 0 3px 15px rgba(136, 68, 255, 0.2);
+}
+
+#rsvp-form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.form-group label {
+  margin-bottom: 5px;
+  font-weight: 600;
+  color: #333;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  font-size: 1em;
+  transition: border-color 0.3s;
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+  border-color: #8844ff;
+  outline: none;
+  box-shadow: 0 0 5px rgba(136, 68, 255, 0.3);
+}
+
+.radio-group {
+  display: flex;
+  gap: 20px;
+  margin-top: 5px;
+}
+
+.radio-group input[type="radio"] {
+  margin-right: 5px;
+}
+
+.submit-btn {
+  background-color: #8844ff;
+  color: white;
+  border: none;
+  padding: 12px;
+  border-radius: 5px;
+  font-size: 1.1em;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.submit-btn:hover {
+  background-color: #7733ee;
+}
+
+#form-status {
+  text-align: center;
+  margin-top: 15px;
+  font-weight: 600;
+}
+
+#form-status.success {
+  color: #28a745;
+}
+
+#form-status.error {
+  color: #dc3545;
+}
+
+.rsvp-buttons {
+  display: flex;
+  justify-content: space-between;
+  gap: 15px;
+  margin-top: 10px;
+}
+
+.rsvp-btn {
+  flex: 1;
+  padding: 15px;
+  border: none;
+  border-radius: 5px;
+  font-size: 1.1em;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-align: center;
+}
+
+.rsvp-btn.attending {
+  background-color: #8844ff;
+  color: white;
+  box-shadow: 0 4px 6px rgba(136, 68, 255, 0.25);
+}
+
+.rsvp-btn.not-attending {
+  background-color: #f5f5f5;
+  color: #555;
+  border: 1px solid #ddd;
+}
+
+.rsvp-btn:hover {
+  transform: translateY(-2px);
+}
+
+.rsvp-btn.attending:hover {
+  background-color: #7733ee;
+  box-shadow: 0 6px 8px rgba(136, 68, 255, 0.35);
+}
+
+.rsvp-btn.not-attending:hover {
+  background-color: #eaeaea;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.rsvp-btn:active {
+  transform: translateY(1px);
+}
+
+#form-status {
+  text-align: center;
+  margin-top: 15px;
+  font-weight: 600;
+}
+
+#form-status.success {
+  color: #28a745;
+}
+
+#form-status.error {
+  color: #dc3545;
+}
 /*# sourceMappingURL=styles.css.map */
