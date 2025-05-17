@@ -82,6 +82,9 @@ body {
     top: 0;
     left: 0;
   }
+  .cat svg {
+    transform: scale(0.5) translatey(-100%) !important;
+  }
 
   .scroll-note {
     bottom: 5vh;

@@ -279,7 +279,6 @@ wrapper.addEventListener("touchend", handleTouchEnd, false);
 // js-media-resize
 
 document.addEventListener("scroll", () => {
-  console.log(window.screen.width);
   if (window.screen.width <= 800) {
     document.getElementById("fixed_zibil").style.display = "flex";
     document.getElementById("fixed_zibil").style.width =
