@@ -270,6 +270,10 @@ wrapper.addEventListener("touchstart", handleTouchStart, false);
 wrapper.addEventListener("touchmove", handleTouchMove, { passive: false }); // Changed to non-passive for better control
 wrapper.addEventListener("touchend", handleTouchEnd, false);
 
+setTimeout(function () {
+  document.getElementById("splash").style.opacity = "0";
+}, 1000);
+
 //   $(".option").click(function(){
 //     $(".option").removeClass("active");
 //     $(this).addClass("active");

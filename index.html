@@ -30,7 +30,8 @@
     />
     <style>
       .countdown {
-        font-size: 2em;
+        font-size: 1.5em;
+        display: flex;
         text-align: center;
         margin: 20px 0;
       }
@@ -86,10 +87,25 @@
 
   <body>
     <div id="fixed_zibil" style="display: none">Watch on desktop</div>
-    <a href="#nav" id="nav_toggle" class="nav_toggle">
+    <a href="#nav" id="nav_toggle" class="nav_toggle" style="display: none">
       <span class="nav_toggle_text">Menu</span>
       <i class="icon menu"></i>
     </a>
+    <div
+      id="splash"
+      style="
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        background-image: url('https://cdn.pixabay.com/animation/2024/05/02/07/43/07-43-00-535_512.gif');
+        background-size: cover;
+        z-index: 999;
+        opacity: 1;
+        transition: opacity 2s ease-in-out;
+      "
+    ></div>
 
     <p class="scroll-note">Scroll</p>
 
@@ -98,12 +114,11 @@
         <section class="slide pink-blue draw">
           <div class="content">
             <div class="block slogan">
-              <h1 class="headline">
-                Ուրախ ենք հրավիրել Ձեզ<br />Նաիրի և Իռենի<br />հարսանիքին
-              </h1>
+              <h1 class="headline">Նաիրի և Իռենի<br />հարսանիք</h1>
               <p style="text-align: center; font-size: 1.2em">
                 Հունիսի 28, 2025
               </p>
+              <img src="imgs/us.jpeg" width="370px" />
               <div class="countdown">
                 <div class="countdown-item">
                   <span id="days">00</span>
@@ -119,7 +134,7 @@
                 </div>
                 <div class="countdown-item">
                   <span id="seconds">00</span>
-                  <p>Վայրկյան</p>
+                  <p>Վրկ</p>
                 </div>
               </div>
             </div>
@@ -139,7 +154,7 @@
           <div class="content">
             <div
               class="block align-top wedding-info"
-              style="position: relative; left: -300px; top: -200px"
+              style="position: relative; left: 100px; top: -200px"
             >
               <h2>Եկեղեցական Արարողություն</h2>
               <p>
@@ -1000,7 +1015,7 @@
         </section>
         <section class="slide pink draw" style="width: 600px">
           <div class="content">
-            <div class="block align-top wedding-info">
+            <div id="restaurant" class="block align-top wedding-info">
               <h2>Ռեստորան</h2>
               <p>
                 Ռեստորան - Արիա (Իգդիր)<br />
