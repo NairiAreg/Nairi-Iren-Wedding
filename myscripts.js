@@ -1,3 +1,13 @@
+// Initialize for mobile devices immediately
+if (window.innerWidth <= 767) {
+  // Add a class to html element
+  document.documentElement.classList.add("mobile");
+
+  // Don't lock scrolling initially - the mobile-init.js will handle proper layout
+  // Only set initial view position
+  window.scrollTo(0, 0);
+}
+
 class Item {
   constructor(el) {
     this.el = el;
@@ -153,6 +163,68 @@ let showOnScroll = (block) => {
 // Improved mobile detection
 const isMobile = () => window.innerWidth <= 767;
 
+// Mobile fixes - run immediately
+function fixMobileLayout() {
+  if (isMobile()) {
+    // Ensure we're at the top on mobile
+    window.scrollTo(0, 0);
+
+    // Apply mobile specific styles
+    document.body.classList.add("mobile-view");
+
+    // Fix positioning of key elements
+    document.querySelectorAll(".slide").forEach((slide) => {
+      slide.style.height = "100vh";
+      slide.style.width = "100vw";
+      slide.style.position = "relative";
+      slide.style.overflow = "hidden";
+    });
+
+    // Fix wrapper and scroller positioning
+    const wrapper = document.querySelector(".wrapper");
+    if (wrapper) {
+      wrapper.style.position = "fixed";
+      wrapper.style.top = "0";
+      wrapper.style.left = "0";
+      wrapper.style.width = "100%";
+      wrapper.style.height = "100vh";
+      wrapper.style.overflow = "hidden";
+    }
+
+    const scroller = document.querySelector(".scroller");
+    if (scroller) {
+      scroller.style.position = "relative";
+      scroller.style.top = "0";
+      scroller.style.left = "0";
+    }
+
+    // Make content visible
+    document.querySelectorAll(".block").forEach((block) => {
+      block.classList.add("show");
+    });
+
+    // Fix content positioning
+    const heroBlock = document.getElementById("hero");
+    if (heroBlock) {
+      heroBlock.style.position = "static";
+      heroBlock.style.top = "0";
+      heroBlock.style.left = "0";
+      heroBlock.style.transform = "none";
+    }
+
+    // Force body constraints
+    document.body.style.height = "100vh";
+    document.body.style.maxHeight = "100vh";
+    document.body.style.overflowY = "hidden";
+
+    // Remove any position values that might be interfering
+    document.querySelectorAll(".content").forEach((content) => {
+      content.style.position = "relative";
+      content.style.zIndex = "10";
+    });
+  }
+}
+
 // Improved resize function with better mobile responsiveness
 let resize = (e) => {
   let width = 0;
@@ -175,8 +247,11 @@ let resize = (e) => {
     // Adjust the game card container for better image display
     const gameCardContainer = document.querySelector(".l-container");
     if (gameCardContainer) {
-      gameCardContainer.style.gridGap = "10px";
+      cardContainer.style.gridGap = "10px";
     }
+
+    // Fix mobile positioning
+    fixMobileLayout();
   }
 
   // Recalculate trigger point
@@ -208,7 +283,24 @@ window.addEventListener("scroll", (e) => {
   // console.log(window.scrollX)
 });
 
-window.addEventListener("load", (e) => html.classList.add("loaded"));
+window.addEventListener("load", (e) => {
+  html.classList.add("loaded");
+
+  // Fix mobile positioning
+  fixMobileLayout();
+
+  // Force scroll to beginning on mobile devices
+  if (isMobile()) {
+    window.scrollTo(0, 0);
+
+    // Apply another fixed position after a small delay
+    setTimeout(() => {
+      window.scrollTo(0, 0);
+      fixMobileLayout();
+    }, 500);
+  }
+});
+
 let lastX = 0;
 let draw = () => {
   let x = scroller.getBoundingClientRect().left;
@@ -245,12 +337,17 @@ let handleTouchEnd = (e) => {
 
 // Modified touch handling for better mobile experience
 let handleTouchMove = (e) => {
-  e.preventDefault();
   if (!xDown || !yDown) return;
+
+  // Prevent default only for horizontal movement to allow some vertical scrolling if needed
+  if (isMobile()) {
+    e.preventDefault();
+  }
+
   let xUp = e.touches[0].clientX;
   let yUp = e.touches[0].clientY;
-  var xDiff = xDown - xUp;
-  var yDiff = yDown - yUp;
+  let xDiff = xDown - xUp;
+  let yDiff = yDown - yUp;
 
   // Enhanced sensitivity for mobile
   let scrollFactor = isMobile() ? 1.5 : 3;
@@ -258,11 +355,12 @@ let handleTouchMove = (e) => {
   if (Math.abs(xDiff) > Math.abs(yDiff)) {
     if (xDiff > 0) direction = "left";
     else direction = "right";
-    window.scroll(scrollXOnDown + xDiff * scrollFactor, 0);
-  } else {
+    window.scrollBy({ left: (xDiff * scrollFactor) / 5, behavior: "auto" });
+  } else if (isMobile()) {
+    // Only use vertical swipes for horizontal scrolling on mobile
     if (yDiff > 0) direction = "up";
     else direction = "down";
-    window.scroll(scrollXOnDown + yDiff * scrollFactor, 0);
+    window.scrollBy({ left: (yDiff * scrollFactor) / 5, behavior: "auto" });
   }
 };
 
@@ -437,3 +535,8 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   }
 });
+
+// Run fixMobileLayout immediately if on mobile
+if (isMobile()) {
+  fixMobileLayout();
+}
