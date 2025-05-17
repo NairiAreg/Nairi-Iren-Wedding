@@ -163,6 +163,11 @@ body {
   body {
     width: 10000px; /* Original width for desktop */
   }
+  #hero {
+    position: relative;
+    top: 0;
+    left: -265px;
+  }
 }
 
 .wrapper {
