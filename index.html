@@ -99,7 +99,7 @@
         left: 0;
         width: 100vw;
         height: 100vh;
-        background-image: url('https://cdn.pixabay.com/animation/2024/05/02/07/43/07-43-00-535_512.gif');
+        background-image: url('./imgs/confetti.gif');
         background-size: cover;
         z-index: 999;
         opacity: 1;
@@ -111,35 +111,73 @@
 
     <div class="wrapper">
       <div class="scroller">
-        <section class="slide pink-blue draw">
-          <div class="content">
+        <!-- Hero Content Section -->
+        <section
+          class="slide content-only"
+          id="hero-slide"
+          style="width: fit-content !important; background: none"
+        >
+          <div class="content" style="padding: 0 !important">
             <div class="block slogan" id="hero">
-              <h1 class="headline">Նաիրի և Իռենի<br />հարսանիք</h1>
-              <p style="text-align: center; font-size: 1.2em">
-                Հունիսի 28, 2025
+              <h1
+                class="headline"
+                style="
+                  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                  -webkit-background-clip: text;
+                  -webkit-text-fill-color: transparent;
+                  background-clip: text;
+                  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+                "
+              >
+                Nairi and Iren<br />Wedding
+              </h1>
+              <p
+                style="
+                  text-align: center;
+                  font-size: 1.2em;
+                  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                  -webkit-background-clip: text;
+                  -webkit-text-fill-color: transparent;
+                  background-clip: text;
+                  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+                "
+              >
+                June 28, 2025
               </p>
-              <img src="imgs/us.jpeg" width="370px" style="margin-top: 20px" />
+              <img
+                src="imgs/us.jpeg"
+                width="500px"
+                style="margin-top: 20px; border-radius: 8px"
+              />
               <div class="countdown">
                 <div class="countdown-item">
-                  <span id="days">00</span>
-                  <p>Օր</p>
+                  <span class="number" id="days">00</span>
+                  <span class="label">Օր</span>
                 </div>
                 <div class="countdown-item">
-                  <span id="hours">00</span>
-                  <p>Ժամ</p>
+                  <span class="number" id="hours">00</span>
+                  <span class="label">Ժամ</span>
                 </div>
                 <div class="countdown-item">
-                  <span id="minutes">00</span>
-                  <p>Րոպե</p>
+                  <span class="number" id="minutes">00</span>
+                  <span class="label">Րոպե</span>
                 </div>
                 <div class="countdown-item">
-                  <span id="seconds">00</span>
-                  <p>Վրկ</p>
+                  <span class="number" id="seconds">00</span>
+                  <span class="label">Վրկ</span>
                 </div>
               </div>
             </div>
           </div>
+        </section>
+
+        <!-- First SVG Animation Section -->
+        <section class="slide svg-only pink-blue">
           <svg
+            data-speed="7"
+            data-delay="300"
+            data-delay-mob="200"
+            data-speed-mob="12"
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 600 420"
             style="overflow: visible"
@@ -150,24 +188,57 @@
             ></path>
           </svg>
         </section>
-        <section class="slide pink-blue draw">
-          <div class="content">
+        <!-- Church Info Content Section -->
+        <section
+          class="slide content-only"
+          style="width: fit-content !important; overflow: visible !important"
+        >
+          <div class="content desktop-scale">
             <div
-              class="block align-top wedding-info"
-              style="position: relative; left: 100px; top: -200px"
+              class="block wedding-info"
+              style="position: relative; padding: 40px"
             >
-              <h2>Եկեղեցական Արարողություն</h2>
-              <p>
-                Սուրբ Գայանե Եկեղեցի<br />
-                Հունիսի 28, 2025<br />
-                Ժամը 13:00
+              <img src="imgs/border.png" id="goldenBorder" />
+              <h2
+                style="
+                  font-size: 2.5rem;
+                  font-family: 'Georgia', serif;
+                  font-weight: bold;
+                  text-align: center;
+                  color: #b8860b;
+                  margin-bottom: 1.5rem;
+                  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+                  position: relative;
+                  z-index: 2;
+                "
+              >
+                Եկեղեցական Արարողություն
+              </h2>
+              <p
+                style="
+                  font-size: 1.25rem;
+                  font-family: 'Arial', sans-serif;
+                  text-align: center;
+                  color: #444;
+                  line-height: 1.6;
+                "
+              >
+                <span style="display: block; font-weight: 600; color: #333"
+                  >Սուրբ Գայանե Եկեղեցի</span
+                >
+                <span style="display: block; font-style: italic; color: #666"
+                  >Հունիսի 28, 2025</span
+                >
+                <span style="display: block; font-weight: 500; color: #333"
+                  >Ժամը 13:00</span
+                >
               </p>
-              <div class="maps">
+              <div class="maps" style="position: relative; z-index: 2">
                 <iframe
                   src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d4641.472518815367!2d44.28926617703157!3d40.15750617137399!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x406a952aa68c6009%3A0x8a692ec2c8be215a!2sSaint%20Gayane%20Church!5e1!3m2!1sen!2sam!4v1745571594964!5m2!1sen!2sam"
-                  width="100%"
+                  width="400"
                   height="300"
-                  style="border: 0"
+                  style="border: 0; max-width: 100%; width: 100%"
                   allowfullscreen=""
                   loading="lazy"
                   referrerpolicy="no-referrer-when-downgrade"
@@ -175,7 +246,17 @@
               </div>
             </div>
           </div>
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 420">
+        </section>
+
+        <!-- Second SVG Animation Section -->
+        <section class="slide svg-only pink-blue">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 600 420"
+            data-speed="7"
+            data-speed-mob="30"
+            data-delay-mob="700"
+          >
             <path
               d="M0 320.4c52.1-39.7 84.9-31.7 122.6-37.3 11.3-1.6 14.5-6 19.5-15.2a67.1 67.1 0 0 0 4.3-32.5c-1.3-8.1-.8-12.7-4.9-18.3-5.7-7.7-17.2-7.7-25.7-11.8-12.1-5.9-26.2-19-38.6-24.3-8.7-3.7-20.2-11.5-27.8-7-3.6 3.5 11.4 16.5 16.9 17.3-2.3-.5-17.5-3.7-17.2 1.4.4 5.5 19.4 14.1 23.6 13.8-2.8.2-15-2.7-14.5 1.7.7 4.6 18.4 10.6 21.7 9.4 2-3-14-2.2-16.4.7-4.8 5.4 16 8.7 20.6 9.1-3.3 1-17.8-2-13.6 3.7 3.2 4 17.4 5.1 21.6 5.2-22.1 4 7 10 9 11.1-11.7 5.5 4.4 7.3 6.1 9.2-8.7 7.7 1.2 12.3 14.7 7.7 9.3-3.1 15.4-7.9 15.6 3.5.1 4.9.4 11.3 7.1 12.8 6.4 1.4 16-5 20.5-8.8a31.3 31.3 0 0 0 11-19.5c.6-3.7 1.2-8 .4-11.5-.5-2.7-2.2-4.3-.1-7 3.7 1.4 5.6-9-.3-3.9 1.8 2.4 7.6 4.5 7.6 4.5s-2-5.4-2.3-6.7c-.2-1 2-2 1.5-4.3-1.8-11.5-18.3-9.6-20.3 2.8-2.2 13.6-20 8.7-26.5 36.7-1.8 8-.5 12.5-1 15.7-1.5 12.3-15.7 10.6-22.7 16.3-5 3.6-6 6.6-2.8 9.2 2.7 1.1 6.1-.3 8.7-1.3-3.2 3.8-6.3 8.6-3.6 13.5 3.3 3.6 6-2.6 9.2-4.3-1.2 3.3-2.1 11 2.8 11.9 4.7.7 7.2-8 9.2-11 .7 2.7 1.2 13.3 5.6 11.1 4-2 1.1-11.6 1.6-14.9.2 1 1.5 6.2 3.5 3.8 1-1.3-3.6-14.7-.2-20.8 6.8-12 21.6-18.7 25-9.3 4 12.6 10.8 5.4 10.2-.9 1 2 5 4.6 7 3.6 3-1.4 2-5.7-2.1-11.1.8 1.7 9.5 7 10.4 4.4.8-2.3.3-5.9-1.9-8.3-.8-.9 0-2.3 1.1-2.1 4.8.7 11 2.8 12.2-.6 1-2.7-5.4-7.3-8.7-7 3.3 1.4 18.2 2.5 20.9-.4 2.8-3.1-7-5.7-10.4-6.4 3.8 0 17.7-.2 19-4.9 1.2-4.7-8.3-4-11.6-3.7 3.3-.9 21.7-4.3 22.1-8.6.4-4.4-11.3-2.8-13.7-2.2 4.6-1.7 15.4-6.2 18-15 1-6.7-11.5 3.7-15.5 5.6 5-1.2 13.8-13.3 13.2-18.7-6.2-5.1-18.4 10.8-24.4 13.8-7.2 3.7-14.1 6-21.7 8-8.6 2.2-5.8 16-16 18a41 41 0 0 1-9.7 26.3c-17.2 17.3-11.7 42.1 5.3 39.8 12-1.6 11.6-11.3 5.1-16.5-8.3-6.7-25-3-24.2 14.9 1.6 30.8 43.7 32 33 54.3-4.1-12 2.7-15.8 14.8-25.5 8.5-6.7 19.5-17 21.7-28 3.3-17-16.8-26.9-28.7-18.1-11.8 8.7-9 32.2 16.7 17.7a100.6 100.6 0 0 1 48.2-12.6"
             />
@@ -184,36 +265,30 @@
             />
           </svg>
         </section>
-        <section class="slide pink-blue draw">
-          <div class="content">
-            <div class="block align-bottom align-right">
-              <!-- <blockquote>
-                My main goal is to reach <br /> 
-                a level where I can be a <br />demanded specialist.
-                <footer>- I think I have that opportunity</footer>
-              </blockquote> -->
-            </div>
-          </div>
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 420">
-            <path
-              d="M265.5 132.5c42.7-5.8 82.3-7 105.4-5.7 7.8.4 15 1.5 22.5 3.6 4 1.2 3.4-.3 4.9-4.3 1-3 6.7-3.3 8.5-3.2 3.8.3 14.7 5.6 17.2 5.5 1.6 0 6.3-2.8 7.8-3 11.5-.7 14.7 4 21.2 5.4 10.8 2.3 17.3 8.6 28.2 10.6 5.3 1 8.9 3.4 14 3.3 8-.3 10-2.2 27.6-3.5 4.5-.3 9.2 1.6 13.6 2.3 7.7 1.3 12.6 1.7 19.5 3.4-1.9 4.1-3.3 7-9.7 7.1-5.1.1-10.5-1-15.7-1.2-5.5 0-10-1-15.2-1.8-5.8-1-11.3 1.5-16.3-2.6 5.6-4 17.3-1.8 23.1-2.2 7.7-.4 6.2 4.6 6.2 11.1 0 4.8 2.8 10.6 2.7 14.8 0 5.8-5.4 12.7-10.3 15.4-2.6-2-1.8-4.2-1.8-5.5 0-6.1 0-9.3 3.8-11.2-4.5-.3-6.6-7.1-6-11.6-3.7 2-8 3.9-11 2.8s-1.8-4.7-4.5-7.4c1 7 3.5 9.9 5.4 16.3.9 3.1 2.3 6.2 1.5 9.5-1.1 4.6-2.1 9.9-6 13.3-4 3.7-10.6 4.6-15 7.9-.5-2.1-2.6-3-2-5 .9-3 6.5-6.8 9.3-7.7-2.3-4.5.5-8.4.4-11.2 0-4-2.9-6-3.7-13.1-.4.1-4 3.4-3.9-9.2.3 5.4-.8 11.3-1.6 16.8-.6 4.9 1.3 7.7-1.2 11.6-1.4 2.3-7 7.8-8.5 9.7-2.4 2.8-7 3.3-9.3 5.8-.3.4-1 .3-1.2-.2-1-1.6-2-1-1.7-4.3.2-4 6.3-5.7 7.6-9.3.6-1.6 2.5-5.4 2.4-8.8-.3-5.9-2.8-11.8-.7-12.9-9.3 8.2-10.9-1.2-15-6.2-6.8-8.2-14.8-10.7-22.4-17.3a60.7 60.7 0 0 0-19.8-13c-3.6-1.2-12.4-3.2-15.7-1.9-1.4.5-1 3 .6 6.3 1 2.3 14.6 10.9 15 17.1.6 8.2-6.2 9.2-10.3 11.1-5.7 2.7-10.8 6.3-16.8 8.6-5.2 2-11.4 4.8-16.8 5.9-6.3 1.2-12.5-1.3-18.5-2.7-4.7-1-10.7-2-14.2 2.1-4.4 5.3 4.3 3 6.8 7.4-9.3 3.2-20 4.7-29.7 7.2-10.1 2.6-43.5 11-44.8 7.8-3.5-8.6 29.9-13.3 34.6-13.8 16.2-1.8 35.6-6.8 51 .8 4.3 2.1 8.6 4 13.3 5.4 8.5 2.5 13-2.5 20.4-6 6.5-3 13.2-2.6 20.1-1 4 1 15 3 16.4 6.6-7.3.8-14-4-21-2.7-11 1.9-17.7 12.7-27.3 16.8-6.5 2.8-8.6.3-13-4.7-2.5-3-9.5-8.4-9.7-12.3 7 3.4 12 8.7 20.4 8 8.3-.8 16.4-4 24.7-5 17-2.1 33 4.3 48.9 8.4 29.8 7.7 56.1 1 76.8 1.7a99.9 99.9 0 0 1 73 33.5"
-            />
+
+        <!-- Third SVG Animation Section -->
+        <section class="slide svg-only pink-blue handsFixes">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 600 420"
+            data-speed="12"
+            data-speed-mob="1300"
+          >
             <path
               d="M0 285c21.6-3.6 40.8-5.5 55.5-5 11.7.2 24.2.2 34 6.6 9.8 6.4 15.2 20.8 8.2 30-3.4 4.5-8.8 7-14.4 7.7-18.4 2.4-33.8-14.9-37.6-32.8-3.2-15.3 2.2-34.4 8.7-47.9 19-39 61-71.4 110.9-88.3 31-11 66.6-18.3 100.2-22.8"
             />
+            <path
+              d="M265.5 132.5c42.7-5.8 82.3-7 105.4-5.7 7.8.4 15 1.5 22.5 3.6 4 1.2 3.4-.3 4.9-4.3 1-3 6.7-3.3 8.5-3.2 3.8.3 14.7 5.6 17.2 5.5 1.6 0 6.3-2.8 7.8-3 11.5-.7 14.7 4 21.2 5.4 10.8 2.3 17.3 8.6 28.2 10.6 5.3 1 8.9 3.4 14 3.3 8-.3 10-2.2 27.6-3.5 4.5-.3 9.2 1.6 13.6 2.3 7.7 1.3 12.6 1.7 19.5 3.4-1.9 4.1-3.3 7-9.7 7.1-5.1.1-10.5-1-15.7-1.2-5.5 0-10-1-15.2-1.8-5.8-1-11.3 1.5-16.3-2.6 5.6-4 17.3-1.8 23.1-2.2 7.7-.4 6.2 4.6 6.2 11.1 0 4.8 2.8 10.6 2.7 14.8 0 5.8-5.4 12.7-10.3 15.4-2.6-2-1.8-4.2-1.8-5.5 0-6.1 0-9.3 3.8-11.2-4.5-.3-6.6-7.1-6-11.6-3.7 2-8 3.9-11 2.8s-1.8-4.7-4.5-7.4c1 7 3.5 9.9 5.4 16.3.9 3.1 2.3 6.2 1.5 9.5-1.1 4.6-2.1 9.9-6 13.3-4 3.7-10.6 4.6-15 7.9-.5-2.1-2.6-3-2-5 .9-3 6.5-6.8 9.3-7.7-2.3-4.5.5-8.4.4-11.2 0-4-2.9-6-3.7-13.1-.4.1-4 3.4-3.9-9.2.3 5.4-.8 11.3-1.6 16.8-.6 4.9 1.3 7.7-1.2 11.6-1.4 2.3-7 7.8-8.5 9.7-2.4 2.8-7 3.3-9.3 5.8-.3.4-1 .3-1.2-.2-1-1.6-2-1-1.7-4.3.2-4 6.3-5.7 7.6-9.3.6-1.6 2.5-5.4 2.4-8.8-.3-5.9-2.8-11.8-.7-12.9-9.3 8.2-10.9-1.2-15-6.2-6.8-8.2-14.8-10.7-22.4-17.3a60.7 60.7 0 0 0-19.8-13c-3.6-1.2-12.4-3.2-15.7-1.9-1.4.5-1 3 .6 6.3 1 2.3 14.6 10.9 15 17.1.6 8.2-6.2 9.2-10.3 11.1-5.7 2.7-10.8 6.3-16.8 8.6-5.2 2-11.4 4.8-16.8 5.9-6.3 1.2-12.5-1.3-18.5-2.7-4.7-1-10.7-2-14.2 2.1-4.4 5.3 4.3 3 6.8 7.4-9.3 3.2-20 4.7-29.7 7.2-10.1 2.6-43.5 11-44.8 7.8-3.5-8.6 29.9-13.3 34.6-13.8 16.2-1.8 35.6-6.8 51 .8 4.3 2.1 8.6 4 13.3 5.4 8.5 2.5 13-2.5 20.4-6 6.5-3 13.2-2.6 20.1-1 4 1 15 3 16.4 6.6-7.3.8-14-4-21-2.7-11 1.9-17.7 12.7-27.3 16.8-6.5 2.8-8.6.3-13-4.7-2.5-3-9.5-8.4-9.7-12.3 7 3.4 12 8.7 20.4 8 8.3-.8 16.4-4 24.7-5 17-2.1 33 4.3 48.9 8.4 29.8 7.7 56.1 1 76.8 1.7a99.9 99.9 0 0 1 73 33.5"
+            />
           </svg>
         </section>
-        <section class="slide blue draw cat">
-          <div class="content">
-            <div class="block align-bottom align-right">
-              <!-- <blockquote>
-                My main goal is to reach <br />
-                a level where I can be a <br />demanded specialist.
-                <footer>- I think I have that opportunity</footer>
-              </blockquote> -->
-            </div>
-          </div>
+        <!-- Cat SVG Animation Section -->
+        <section class="slide svg-only blue">
           <svg
+            data-speed="1000"
+            data-delay="400"
+            data-speed-mob="10"
+            data-delay-mob="100"
             xmlns="http://www.w3.org/2000/svg"
             version="1.1"
             style="
@@ -1013,15 +1088,43 @@
             </g>
           </svg>
         </section>
-        <section class="slide pink draw" style="width: 600px">
+        <!-- Info Content Section -->
+        <section class="slide pink draw infoSectionFixes">
           <div class="content">
             <div id="restaurant" class="block align-top wedding-info">
-              <h2>Ռեստորան</h2>
-              <p>
-                Ռեստորան - Արիա (Իգդիր)<br />
-                Հունիսի 28, 2025<br />
-                Ժամը 18:00
+              <h2
+                style="
+                  font-size: 2.5rem;
+                  font-family: 'Georgia', serif;
+                  font-weight: bold;
+                  text-align: center;
+                  color: #b8860b;
+                  margin-bottom: 1.5rem;
+                  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+                "
+              >
+                Ռեստորան
+              </h2>
+              <p
+                style="
+                  font-size: 1.25rem;
+                  font-family: 'Arial', sans-serif;
+                  text-align: center;
+                  color: #444;
+                  line-height: 1.6;
+                "
+              >
+                <span style="display: block; font-weight: 600; color: #333"
+                  >Ռեստորան - Արիա (Իգդիր)</span
+                >
+                <span style="display: block; font-style: italic; color: #666"
+                  >Հունիսի 28, 2025</span
+                >
+                <span style="display: block; font-weight: 500; color: #333"
+                  >Ժամը 18:00</span
+                >
               </p>
+
               <div class="maps">
                 <iframe
                   src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d4639.418278879968!2d44.57918537703276!3d40.187549369554624!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x406aa30046e4e511%3A0xb7a6aa78b7be4c5d!2sAria%20By%20Igdir!5e1!3m2!1sen!2sam!4v1745592662917!5m2!1sen!2sam"
@@ -1036,12 +1139,17 @@
             </div>
           </div>
         </section>
+
         <section class="slide pink draw cat" style="width: 1030px">
           <?xml version="1.0" encoding="UTF-8"?>
           <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             version="1.1"
+            data-speed="600"
+            data-delay="600"
+            data-speed-mob="500"
+            data-delay-mob="200"
             style="
               shape-rendering: geometricPrecision;
               text-rendering: geometricPrecision;
@@ -1840,50 +1948,50 @@
           </svg>
         </section>
 
-        <!--! --------------------------------------------------------  -->
-
-        <section class="slide pink draw" style="width: 600px">
+        <!-- RSVP Form Content Section -->
+        <section class="slide content-only">
           <div class="content">
-            <div class="block align-top" style="max-width: 100%">
-              <h2>Եթե հարազատների հետ եք գալու, գրանցեք նրանց նույնպես =)</h2>
-              <div class="rsvp-form-container">
-                <form id="rsvp-form">
-                  <div class="form-group">
-                    <label for="name">Անուն Ազգանուն</label>
-                    <input type="text" id="name" name="name" required />
-                  </div>
+            <div class="block rsvp-form">
+              <h2>Գրանցում</h2>
+              <p style="text-align: center; margin-bottom: 2rem">
+                Եթե հարազատների հետ եք գալու, գրանցեք նրանց նույնպես =)
+              </p>
+              <form id="rsvp-form">
+                <div class="form-group">
+                  <label for="name">Անուն Ազգանուն</label>
+                  <input type="text" id="name" name="name" required />
+                </div>
 
-                  <div class="form-group">
-                    <label for="phone">Հեռախոսահամար</label>
-                    <input type="tel" id="phone" name="phone" required />
-                  </div>
+                <div class="form-group">
+                  <label for="phone">Հեռախոսահամար</label>
+                  <input type="tel" id="phone" name="phone" required />
+                </div>
 
-                  <div class="rsvp-buttons">
-                    <button
-                      type="button"
-                      id="attending-yes"
-                      class="rsvp-btn attending"
-                    >
-                      Գալու եմ
-                    </button>
-                    <button
-                      type="button"
-                      id="attending-no"
-                      class="rsvp-btn not-attending"
-                    >
-                      Չեմ գալու
-                    </button>
-                  </div>
+                <div class="rsvp-buttons">
+                  <button
+                    type="button"
+                    id="attending-yes"
+                    class="rsvp-btn attending"
+                  >
+                    Գալու եմ
+                  </button>
+                  <button
+                    type="button"
+                    id="attending-no"
+                    class="rsvp-btn not-attending"
+                  >
+                    Չեմ գալու
+                  </button>
+                </div>
 
-                  <div id="form-status"></div>
-                </form>
-              </div>
+                <div id="form-status"></div>
+              </form>
             </div>
           </div>
         </section>
       </div>
     </div>
 
-    <script src="myscripts.js"></script>
+    <script src="horizontal-scroller.js"></script>
   </body>
 </html>
