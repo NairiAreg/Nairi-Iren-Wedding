@@ -76,7 +76,7 @@ class HorizontalScroller {
     this.setupStyles();
 
     // Create control panel
-    this.createControlPanel();
+    // this.createControlPanel();
 
     // Start animation loop
     this.animate();
@@ -798,22 +798,14 @@ class HorizontalScroller {
 
     // Calculate distance moved
     const deltaX = this.lastTouchX - touchX;
-    const deltaY = this.touchStartY - touchY;
     this.lastTouchX = touchX;
 
-    // Enhanced mobile touch sensitivity and vertical-to-horizontal conversion
-    let touchMultiplier = this.isMobile ? 0.8 : 1.0; // Reduced from 2.0 to 0.8 for slower mobile scrolling
-    let actualDelta = deltaX;
+    // Enhanced mobile touch sensitivity for horizontal scrolling only
+    let touchMultiplier = this.isMobile ? 0.8 : 1.0;
 
-    // On mobile, also use vertical movement for horizontal scrolling
-    if (this.isMobile && Math.abs(deltaY) > Math.abs(deltaX)) {
-      actualDelta = deltaY * 0.5; // Reduced from 0.8 to 0.5 for slower vertical sensitivity
-    }
-
-    // Update target position based on touch movement with enhanced mobile sensitivity
+    // Update target position based on horizontal touch movement only
     this.scrollTo(
-      this.targetX +
-        actualDelta * this.options.touchSensitivity * touchMultiplier
+      this.targetX + deltaX * this.options.touchSensitivity * touchMultiplier
     );
   }
 
