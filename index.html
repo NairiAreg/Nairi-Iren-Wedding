@@ -2009,9 +2009,44 @@
             </div>
           </div>
         </section>
+
+        <!-- Audio elements for RSVP buttons -->
+        <audio id="success-audio" preload="auto">
+          <source src="audio/success.mp3" type="audio/mpeg" />
+          Your browser does not support the audio element.
+        </audio>
+        <audio id="fail-audio" preload="auto">
+          <source src="audio/fail.mp3" type="audio/mpeg" />
+          Your browser does not support the audio element.
+        </audio>
       </div>
     </div>
 
     <script src="horizontal-scroller.js"></script>
+    <script>
+      // Audio functionality for RSVP buttons
+      document.addEventListener("DOMContentLoaded", function () {
+        const yesButton = document.getElementById("attending-yes");
+        const noButton = document.getElementById("attending-no");
+        const successAudio = document.getElementById("success-audio");
+        const failAudio = document.getElementById("fail-audio");
+
+        // Play success sound when "Yes" button is clicked
+        yesButton.addEventListener("click", function () {
+          successAudio.currentTime = 0; // Reset audio to beginning
+          successAudio.play().catch(function (error) {
+            console.log("Error playing success audio:", error);
+          });
+        });
+
+        // Play fail sound when "No" button is clicked
+        noButton.addEventListener("click", function () {
+          failAudio.currentTime = 0; // Reset audio to beginning
+          failAudio.play().catch(function (error) {
+            console.log("Error playing fail audio:", error);
+          });
+        });
+      });
+    </script>
   </body>
 </html>

@@ -638,7 +638,7 @@ class HorizontalScroller {
     if (this.isMobile) {
       document.documentElement.style.overflow = "hidden";
       document.body.style.overflow = "hidden";
-      document.body.style.touchAction = "none";
+      document.body.style.touchAction = "pan-x"; // Allow horizontal panning but preserve form interactions
       document.body.style.position = "fixed";
       document.body.style.top = "0";
       document.body.style.left = "0";
@@ -796,9 +796,20 @@ class HorizontalScroller {
   }
 
   onTouchStart(e) {
-    e.preventDefault();
+    // Don't prevent default for form elements or elements inside RSVP form
+    const target = e.target;
+    const isFormElement = target.matches(
+      "input, select, button, textarea, [contenteditable]"
+    );
+    const isInRSVPForm = target.closest(".rsvp-form");
 
-    this.isDragging = true;
+    if (!isFormElement && !isInRSVPForm) {
+      e.preventDefault();
+      this.isDragging = true;
+    } else {
+      this.isDragging = false; // Don't start dragging on form elements
+    }
+
     this.touchStartX = e.touches[0].clientX;
     this.touchStartY = e.touches[0].clientY;
     this.lastTouchX = this.touchStartX;
@@ -806,26 +817,51 @@ class HorizontalScroller {
 
   onTouchMove(e) {
     if (!this.isDragging) return;
-    e.preventDefault();
 
-    const touchX = e.touches[0].clientX;
-    const touchY = e.touches[0].clientY;
-
-    // Calculate distance moved
-    const deltaX = this.lastTouchX - touchX;
-    this.lastTouchX = touchX;
-
-    // Enhanced mobile touch sensitivity for horizontal scrolling only
-    let touchMultiplier = this.isMobile ? 0.8 : 1.0;
-
-    // Update target position based on horizontal touch movement only
-    this.scrollTo(
-      this.targetX + deltaX * this.options.touchSensitivity * touchMultiplier
+    // Don't prevent default for form elements or if any input is focused
+    const target = e.target;
+    const isFormElement = target.matches(
+      "input, select, button, textarea, [contenteditable]"
     );
+    const isInRSVPForm = target.closest(".rsvp-form");
+    const hasActiveInput =
+      document.activeElement &&
+      document.activeElement.matches(
+        "input, select, button, textarea, [contenteditable]"
+      );
+
+    if (!isFormElement && !isInRSVPForm && !hasActiveInput) {
+      e.preventDefault();
+
+      const touchX = e.touches[0].clientX;
+      const touchY = e.touches[0].clientY;
+
+      // Calculate distance moved
+      const deltaX = this.lastTouchX - touchX;
+      this.lastTouchX = touchX;
+
+      // Enhanced mobile touch sensitivity for horizontal scrolling only
+      let touchMultiplier = this.isMobile ? 0.8 : 1.0;
+
+      // Update target position based on horizontal touch movement only
+      this.scrollTo(
+        this.targetX + deltaX * this.options.touchSensitivity * touchMultiplier
+      );
+    }
   }
 
   onTouchEnd(e) {
-    e.preventDefault();
+    // Don't prevent default for form elements or elements inside RSVP form
+    const target = e.target;
+    const isFormElement = target.matches(
+      "input, select, button, textarea, [contenteditable]"
+    );
+    const isInRSVPForm = target.closest(".rsvp-form");
+
+    if (!isFormElement && !isInRSVPForm) {
+      e.preventDefault();
+    }
+
     this.isDragging = false;
 
     // Snap to closest slide if enabled
@@ -886,9 +922,9 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   // Add click handler for scroll arrow
-  const scrollArrow = document.querySelector('.scroll-arrow');
+  const scrollArrow = document.querySelector(".scroll-arrow");
   if (scrollArrow) {
-    scrollArrow.addEventListener('click', () => {
+    scrollArrow.addEventListener("click", () => {
       window.horizontalScroller.nextSlide();
     });
   }
@@ -934,58 +970,95 @@ function updateCountdown() {
 
 // RSVP Form functionality
 function initializeRSVPForm() {
-  const form = document.getElementById("rsvp-form");
-  const attendingYes = document.getElementById("attending-yes");
-  const attendingNo = document.getElementById("attending-no");
-  const status = document.getElementById("form-status");
+  const rsvpForm = document.getElementById("rsvp-form");
+  const formStatus = document.getElementById("form-status");
+  const attendingBtn = document.getElementById("attending-yes");
+  const notAttendingBtn = document.getElementById("attending-no");
 
-  if (!form) return;
+  if (!rsvpForm) return;
 
-  let isAttending = null;
+  // Google Apps Script URL
+  const scriptURL =
+    "https://script.google.com/macros/s/AKfycbyTjezA5tccPxq4Q4BnYeXrZq04n-wi-UrTt7P6k5Ww3qbVcQs917fGOzSRSQgGdx2v/exec";
 
-  // Handle RSVP buttons
-  attendingYes.addEventListener("click", () => {
-    isAttending = true;
-    attendingYes.classList.add("selected");
-    attendingNo.classList.remove("selected");
-    submitForm();
-  });
-
-  attendingNo.addEventListener("click", () => {
-    isAttending = false;
-    attendingNo.classList.add("selected");
-    attendingYes.classList.remove("selected");
-    submitForm();
-  });
-
-  function submitForm() {
+  function submitForm(attendance) {
+    // Validate form
     const name = document.getElementById("name").value;
     const phone = document.getElementById("phone").value;
 
     if (!name || !phone) {
-      status.textContent = "Խնդրում ենք լրացնել բոլոր դաշտերը";
-      status.className = "error";
+      formStatus.textContent = "Խնդրում ենք լրացնել բոլոր դաշտերը։";
+      formStatus.className = "error";
       return;
     }
 
-    // Here you would normally send the data to your server
-    // For now, we'll just show a success message
-    const message = isAttending
-      ? "Շնորհակալություն! Ձեր ներկայությունը գրանցված է։"
-      : "Շնորհակալություն ծանուցելու համար։";
+    // Show loading state
+    formStatus.textContent = "Ուղարկվում է...";
+    formStatus.className = "";
 
-    status.textContent = message;
-    status.className = "success";
+    // Prepare data for sending with only the required fields
+    const data = {
+      timestamp: new Date().toISOString(),
+      name: name,
+      phone: phone,
+      attendance: attendance,
+    };
 
-    // Reset form after a delay
+    // Create an iframe for the response
+    const iframeName = "hidden-iframe";
+    let iframe = document.getElementById(iframeName);
+    if (!iframe) {
+      iframe = document.createElement("iframe");
+      iframe.id = iframeName;
+      iframe.name = iframeName;
+      iframe.style.display = "none";
+      document.body.appendChild(iframe);
+    }
+
+    // Create form with proper encoding for JSON
+    const form = document.createElement("form");
+    form.method = "POST";
+    form.action = scriptURL;
+    form.target = iframeName;
+
+    // Add a field for the JSON data
+    const jsonField = document.createElement("input");
+    jsonField.type = "hidden";
+    jsonField.name = "payload";
+    jsonField.value = JSON.stringify(data);
+    form.appendChild(jsonField);
+
+    // Submit the form
+    document.body.appendChild(form);
+    form.submit();
+
+    // Remove the form after submission
     setTimeout(() => {
-      form.reset();
-      attendingYes.classList.remove("selected");
-      attendingNo.classList.remove("selected");
-      status.textContent = "";
-      status.className = "";
-      isAttending = null;
-    }, 3000);
+      document.body.removeChild(form);
+      formStatus.textContent = "Շնորհակալություն! Ձեր RSVP-ն ընդունված է։";
+      formStatus.className = "success";
+      rsvpForm.reset();
+    }, 2000);
+
+    // Add event listener to handle errors
+    iframe.onerror = function () {
+      formStatus.textContent = "Տեղի ունեցավ սխալ: Խնդրում ենք փորձել կրկին։";
+      formStatus.className = "error";
+    };
+  }
+
+  if (attendingBtn && notAttendingBtn) {
+    attendingBtn.addEventListener("click", function (e) {
+      attendingBtn.classList.add("selected");
+      notAttendingBtn.classList.remove("selected");
+      submitForm("Այո");
+    });
+
+    notAttendingBtn.addEventListener("click", function (e) {
+      notAttendingBtn.classList.add("selected");
+      attendingBtn.classList.remove("selected");
+      submitForm("Ոչ");
+    });
   }
 }
 
