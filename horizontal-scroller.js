@@ -661,6 +661,9 @@ class HorizontalScroller {
     // Check if we should update active slide
     this.updateActiveSlide();
 
+    // Handle scroll arrow visibility
+    this.updateScrollArrowVisibility();
+
     // Continue animation loop
     requestAnimationFrame(this.animate.bind(this));
   }
@@ -721,6 +724,18 @@ class HorizontalScroller {
     blocks.forEach((block) => {
       block.classList.add("active");
     });
+  }
+
+  updateScrollArrowVisibility() {
+    const scrollArrow = document.querySelector(".scroll-arrow-container");
+    if (scrollArrow) {
+      // Hide arrow after user starts scrolling horizontally (100px threshold)
+      if (this.currentX > 100) {
+        scrollArrow.style.opacity = "0";
+      } else {
+        scrollArrow.style.opacity = "1";
+      }
+    }
   }
 
   scrollTo(position) {
@@ -868,6 +883,14 @@ document.addEventListener("DOMContentLoaded", () => {
   const scrollNote = document.querySelector(".scroll-note");
   if (scrollNote) {
     scrollNote.style.animation = "blink-and-fade 3s infinite";
+  }
+
+  // Add click handler for scroll arrow
+  const scrollArrow = document.querySelector('.scroll-arrow');
+  if (scrollArrow) {
+    scrollArrow.addEventListener('click', () => {
+      window.horizontalScroller.nextSlide();
+    });
   }
 
   // Initialize countdown if present
