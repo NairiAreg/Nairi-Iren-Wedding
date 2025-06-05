@@ -1035,8 +1035,22 @@ function initializeRSVPForm() {
     // Remove the form after submission
     setTimeout(() => {
       document.body.removeChild(form);
-      formStatus.textContent = "Շնորհակալություն! Ձեր RSVP-ն ընդունված է։";
-      formStatus.className = "success";
+
+      // Show different messages based on attendance
+      if (attendance === "Այո") {
+        // If coming - show Armenian message about dancing
+        formStatus.textContent =
+          "Շնորհակալություն! Էդ օրը լիքը կպարենք միասին! 💃🕺";
+        formStatus.className = "success";
+      } else {
+        // If not coming - show red toast message
+        showRedToast(
+          "Ափսոս :( Պարելու ենք առանց ձեզ! 💃🕺❤️"
+        );
+        formStatus.textContent = "Ձեր պատասխանն ընդունված է։";
+        formStatus.className = "success";
+      }
+
       rsvpForm.reset();
     }, 2000);
 
@@ -1060,6 +1074,55 @@ function initializeRSVPForm() {
       submitForm("Ոչ");
     });
   }
+}
+
+// Red toast notification function
+function showRedToast(message) {
+  // Create toast element
+  const toast = document.createElement("div");
+  toast.className = "red-toast";
+  toast.textContent = message;
+
+  // Add toast styles
+  toast.style.cssText = `
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: linear-gradient(135deg, #ff4757, #ff3742);
+    color: white;
+    padding: 20px 30px;
+    border-radius: 12px;
+    font-size: 18px;
+    font-weight: 600;
+    text-align: center;
+    box-shadow: 0 8px 25px rgba(255, 71, 87, 0.4);
+    z-index: 10000;
+    opacity: 0;
+    transition: all 0.3s ease;
+    max-width: 90vw;
+    font-family: "Open Sans", "Arial Armenian", sans-serif;
+  `;
+
+  // Add to page
+  document.body.appendChild(toast);
+
+  // Animate in
+  setTimeout(() => {
+    toast.style.opacity = "1";
+    toast.style.transform = "translate(-50%, -50%) scale(1.05)";
+  }, 10);
+
+  // Animate out and remove
+  setTimeout(() => {
+    toast.style.opacity = "0";
+    toast.style.transform = "translate(-50%, -50%) scale(0.95)";
+    setTimeout(() => {
+      if (document.body.contains(toast)) {
+        document.body.removeChild(toast);
+      }
+    }, 300);
+  }, 4000);
 }
 
 // Helper function to check if device is mobile
