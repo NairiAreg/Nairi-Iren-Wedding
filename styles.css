@@ -539,7 +539,11 @@ h2 {
 
 /* Cat SVG specific styles */
 .cat svg {
-  transform: scale(0.8);
+  /* transform: scale(0.8); */
+}
+
+.cat svg path {
+  stroke-width: 7px !important;
 }
 
 /* Utility classes */
