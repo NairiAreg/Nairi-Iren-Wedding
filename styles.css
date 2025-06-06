@@ -574,7 +574,7 @@ h2 {
 }
 
 .handsFixes {
-  margin-left: -11px;
+  margin-left: 0px;
 }
 
 @media (min-width: 768px) {
