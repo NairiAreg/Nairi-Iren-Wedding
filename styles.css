@@ -399,11 +399,6 @@ body {
   margin: 20px 0;
 }
 
-.countdown-item {
-  display: inline-block;
-  margin: 0 15px;
-}
-
 .rsvp-form {
   background: #ffffff;
   backdrop-filter: none;
