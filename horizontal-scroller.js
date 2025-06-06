@@ -589,6 +589,35 @@ class HorizontalScroller {
         // Keep full width on mobile for hero slide
         slide.style.width = "100vw";
         this.totalWidth += this.wrapperWidth;
+      } else if (slide.classList.contains("svg-only")) {
+        // Calculate width based on SVG aspect ratio for svg-only slides
+        const svg = slide.querySelector("svg");
+        if (svg) {
+          const viewBox = svg.getAttribute("viewBox");
+          if (viewBox) {
+            const [, , width, height] = viewBox.split(" ").map(Number);
+            const aspectRatio = width / height;
+
+            // Use desired height (90% of viewport height on desktop, 85% on mobile)
+            const desiredHeight = this.isMobile
+              ? window.innerHeight * 0.85
+              : window.innerHeight * 0.9;
+            const calculatedWidth = desiredHeight * aspectRatio;
+
+            slide.style.width = `${calculatedWidth}px`;
+            this.totalWidth += calculatedWidth;
+          } else {
+            // Fallback if no viewBox found
+            const slideWidth = slide.offsetWidth;
+            slide.style.width = `${slideWidth}px`;
+            this.totalWidth += slideWidth;
+          }
+        } else {
+          // Fallback if no SVG found
+          const slideWidth = slide.offsetWidth;
+          slide.style.width = `${slideWidth}px`;
+          this.totalWidth += slideWidth;
+        }
       } else {
         // Use clientWidth to get the actual width of the slide
         const slideWidth = slide.offsetWidth;
@@ -676,10 +705,13 @@ class HorizontalScroller {
 
     let accumulatedWidth = 0;
     this.slides.forEach((slide, index) => {
-      // Get slide width, accounting for hero slide on mobile
+      // Get slide width, accounting for hero slide on mobile and SVG slides
       let slideWidth;
       if (this.isMobile && slide.id === "hero-slide") {
         slideWidth = this.wrapperWidth;
+      } else if (slide.classList.contains("svg-only")) {
+        // Use the calculated width for SVG slides
+        slideWidth = parseFloat(slide.style.width) || slide.offsetWidth;
       } else {
         slideWidth = slide.offsetWidth;
       }
@@ -747,9 +779,12 @@ class HorizontalScroller {
 
     let targetPosition = 0;
     for (let i = 0; i < index; i++) {
-      // Account for hero slide on mobile
+      // Account for hero slide on mobile and SVG slides
       if (this.isMobile && this.slides[i].id === "hero-slide") {
         targetPosition += this.wrapperWidth;
+      } else if (this.slides[i].classList.contains("svg-only")) {
+        targetPosition +=
+          parseFloat(this.slides[i].style.width) || this.slides[i].offsetWidth;
       } else {
         targetPosition += this.slides[i].offsetWidth;
       }
@@ -776,9 +811,12 @@ class HorizontalScroller {
     // Update target position to keep current slide in view
     let targetPosition = 0;
     for (let i = 0; i < this.currentSlide; i++) {
-      // Account for hero slide on mobile
+      // Account for hero slide on mobile and SVG slides
       if (this.isMobile && this.slides[i].id === "hero-slide") {
         targetPosition += this.wrapperWidth;
+      } else if (this.slides[i].classList.contains("svg-only")) {
+        targetPosition +=
+          parseFloat(this.slides[i].style.width) || this.slides[i].offsetWidth;
       } else {
         targetPosition += this.slides[i].offsetWidth;
       }
@@ -1044,9 +1082,7 @@ function initializeRSVPForm() {
         formStatus.className = "success";
       } else {
         // If not coming - show red toast message
-        showRedToast(
-          "Ափսոս :( Պարելու ենք առանց ձեզ! 💃🕺❤️"
-        );
+        showRedToast("Ափսոս :( Պարելու ենք առանց ձեզ! 💃🕺❤️");
         formStatus.textContent = "Ձեր պատասխանն ընդունված է։";
         formStatus.className = "success";
       }

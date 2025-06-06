@@ -60,7 +60,7 @@ body {
 .slide {
   position: relative;
   height: 100vh;
-  width: 100vw;
+  width: 100vw; /* Default width, will be overridden by JavaScript for svg-only slides */
   overflow: hidden;
   flex-shrink: 0;
 }
@@ -694,9 +694,8 @@ h2 {
 
   .slide.svg-only svg {
     height: 90%;
-    width: 90%;
-    max-width: 800px;
-    max-height: 600px;
+    width: auto; /* Allow width to be calculated by aspect ratio */
+    max-height: 90vh;
     position: relative;
   }
 
@@ -762,9 +761,8 @@ h2 {
 
   .slide.svg-only svg {
     height: 85% !important;
-    width: 100% !important;
-    max-height: none !important;
-    max-width: none !important;
+    width: auto !important; /* Allow width to be calculated by aspect ratio */
+    max-height: 85vh !important;
   }
 
   #hero {
